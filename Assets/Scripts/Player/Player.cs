@@ -80,5 +80,11 @@ public class Player : MonoBehaviour
         {
             DoDamage(damageDealer.damage);
         }
+
+        if (collision.gameObject.CompareTag("MedicineChest"))
+        {
+            health = 100;
+            Destroy(collision.gameObject);
+        }
     }
 }

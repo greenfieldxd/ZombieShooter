@@ -9,34 +9,42 @@ public class Enemy : MonoBehaviour
     public Transform shootPos;
     public GameObject bulletPrefab;
 
+    Animator anim;
+
 
     private void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         StartCoroutine(PlayerKill(2));
+        StartCoroutine(RotateToPlayer());
     }
 
     private void Update()
     {
-        RotateToPlayer();
+        //RotateToPlayer();
     }
 
 
     IEnumerator PlayerKill(float delayFire)
     {
         yield return new WaitForSeconds(delayFire);
+        anim.SetTrigger("Shoot");
         Instantiate(bulletPrefab, shootPos.position, transform.rotation);
 
         StartCoroutine(PlayerKill(1));
          
     }
 
-    private void RotateToPlayer()
+    IEnumerator RotateToPlayer()
     {
+        yield return new WaitForEndOfFrame();
         Player player = FindObjectOfType<Player>();
 
         Vector2 direction = player.transform.position - transform.position;
 
         transform.up = -direction;
+
+        StartCoroutine(RotateToPlayer());
     }
 
 
@@ -46,7 +54,10 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
-            Destroy(gameObject);
+            anim.SetBool("Death", true);
+            CircleCollider2D collider = GetComponent<CircleCollider2D>();
+            collider.enabled = false;
+            StopAllCoroutines();
         }
         
     }
