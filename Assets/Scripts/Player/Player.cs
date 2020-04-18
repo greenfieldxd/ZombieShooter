@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     public float fireRate;
+    public float health;
+
 
     public GameObject bulletPrefab;
     public Transform shootPosition;
@@ -12,26 +15,70 @@ public class Player : MonoBehaviour
     float nextFire;
 
     Animator anim;
+    PlayerMovement playerMovement;
 
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponentInChildren<Animator>();   
+        anim = GetComponentInChildren<Animator>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire1") && nextFire <= 0)
+        CanPlayerFire();
+    }
+
+    private void CanPlayerFire()
+    {
+        if (health > 0)
         {
-            Instantiate(bulletPrefab, shootPosition.position, transform.rotation);
-            nextFire = fireRate;
-            anim.SetTrigger("Shoot");
+            if (Input.GetButton("Fire1") && nextFire <= 0)
+            {
+                Instantiate(bulletPrefab, shootPosition.position, transform.rotation);
+                nextFire = fireRate;
+                anim.SetTrigger("Shoot");
+            }
+
+            if (nextFire > 0)
+            {
+                nextFire -= Time.deltaTime;
+            }
+        }
+    }
+
+    void DoDamage(float damage)
+    {
+        health -= damage;
+
+        if (health <= 0)
+        {
+            DeathPlayer();
         }
 
-        if (nextFire > 0)
+    }
+
+    void DeathPlayer()
+    {
+        playerMovement.isAlive = false;
+        anim.SetBool("Death", true);
+        StartCoroutine(RestartGame());
+    }
+
+    IEnumerator RestartGame()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("Game");
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        DamageDealer damageDealer = collision.GetComponent<DamageDealer>();
+
+        if (damageDealer != null)
         {
-            nextFire -= Time.deltaTime;
+            DoDamage(damageDealer.damage);
         }
     }
 }

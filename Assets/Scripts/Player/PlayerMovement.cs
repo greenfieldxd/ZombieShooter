@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
+    public bool isAlive = true;
+
 
     Rigidbody2D rb;
     Animator anim;
@@ -19,9 +21,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Rotate();
+        if (isAlive == true)
+        {
+            Move();
+            Rotate();
+        }
     }
+
+    
 
     private void Move()
     {
