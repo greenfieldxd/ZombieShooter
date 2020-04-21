@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 998983355874144077}
   - component: {fileID: 5783328535982755205}
   - component: {fileID: 2002234668473435233}
+  - component: {fileID: 1526485450}
   m_Layer: 0
   m_Name: MedicineChest
   m_TagString: MedicineChest
@@ -108,3 +109,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.37, y: 1.33}
   m_EdgeRadius: 0
+--- !u!114 &1526485450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463512341265574060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbcda1af9b97dfb4b8f66d2db326c59b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

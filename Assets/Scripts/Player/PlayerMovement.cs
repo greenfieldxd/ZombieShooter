@@ -22,9 +22,16 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if (isAlive == true)
-        {
-            Move();
+        {  
             Rotate();
+        }
+    } 
+    
+    void FixedUpdate()
+    {
+        if (isAlive == true)
+        {
+            Move(); 
         }
     }
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -63,14 +62,12 @@ public class Player : MonoBehaviour
     {
         playerMovement.isAlive = false;
         anim.SetBool("Death", true);
-        StartCoroutine(RestartGame());
+
+        SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
+        sceneLoader.RestartScene();
     }
 
-    IEnumerator RestartGame()
-    {
-        yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("Game");
-    }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -80,11 +77,7 @@ public class Player : MonoBehaviour
         {
             DoDamage(damageDealer.damage);
         }
-
-        if (collision.gameObject.CompareTag("MedicineChest"))
-        {
-            health = 100;
-            Destroy(collision.gameObject);
-        }
     }
+
+
 }
