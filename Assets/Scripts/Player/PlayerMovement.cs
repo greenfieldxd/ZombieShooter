@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
-    public bool isAlive = true;
 
 
     Rigidbody2D rb;
@@ -21,18 +20,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isAlive == true)
-        {  
             Rotate();
-        }
     } 
     
     void FixedUpdate()
     {
-        if (isAlive == true)
-        {
-            Move(); 
-        }
+            Move();
     }
 
     
@@ -58,6 +51,11 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 direction = mouseWorldPosition - transform.position;
         transform.up = -direction;
+    }
+
+    public void StopMovement()
+    {
+        rb.velocity = Vector2.zero;
     }
 
 

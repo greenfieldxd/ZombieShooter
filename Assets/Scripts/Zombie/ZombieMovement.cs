@@ -13,7 +13,6 @@ public class ZombieMovement : MonoBehaviour
     //components on the same gameObject
     Rigidbody2D rb;
 
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -29,9 +28,17 @@ public class ZombieMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        FollowPlayer();
+    }
+
+    private void FollowPlayer()
+    {
         Vector2 direction = player.transform.position - transform.position;
         rb.velocity = direction.normalized * speed;
     }
+
+
+   
 
     public void StopMovement()
     {

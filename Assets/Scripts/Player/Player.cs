@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void DoDamage(float damage)
+    public void DoDamage(float damage)
     {
         health -= damage;
 
@@ -60,8 +60,9 @@ public class Player : MonoBehaviour
 
     void DeathPlayer()
     {
-        playerMovement.isAlive = false;
         anim.SetBool("Death", true);
+        playerMovement.enabled = false;
+        playerMovement.StopMovement();
 
         SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
         sceneLoader.RestartScene();

@@ -39,6 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Enemy, Zombie
+    uniqueID: 3605812489
+    locked: 0
   - name: Bullet
     uniqueID: 534421455
     locked: 0

@@ -7,10 +7,14 @@ public class Zombie : MonoBehaviour
     [Header("AI config")]
     public float followDistance;
     public float attackDistance;
+    public float outOfFallowDistance;
 
-    [Header("Attack config")]
+    [Header("Attack, health config")]
     public float attackRate;
     public float damage;
+    public float health;
+
+    float nextAttack;
 
     
 
@@ -39,6 +43,7 @@ public class Zombie : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         ChangeState(ZombieStates.STAND);
+
     }
 
     // Update is called once per frame
@@ -68,6 +73,10 @@ public class Zombie : MonoBehaviour
                 {
                     ChangeState(ZombieStates.ATTACK);
                 }
+                if (distance >= outOfFallowDistance)
+                {
+                    ChangeState(ZombieStates.STAND);
+                }
                 Rotate();
                 break;
             case ZombieStates.ATTACK:
@@ -75,6 +84,7 @@ public class Zombie : MonoBehaviour
                 {
                     ChangeState(ZombieStates.MOVE);
                 }
+                ZombieAttack();
                 Rotate();
                 anim.SetTrigger("Shoot");
                 break;
@@ -107,12 +117,60 @@ public class Zombie : MonoBehaviour
         transform.up = -direction;
     }
 
+    void ZombieAttack()
+    {
+        if (nextAttack <= 0)
+        {
+            player.DoDamage(damage);
+            nextAttack = attackRate;
+        }
+
+        if (attackRate > 0)
+        {
+            nextAttack -= Time.deltaTime;
+        }
+
+    }
+
+    public void DoDamage(float damage)
+    {
+        health -= damage;
+
+        if (health <= 0)
+        {
+            ZombieDie();
+        }
+
+    }
+
+    private void ZombieDie()
+    {
+        this.enabled = false;
+        Collider2D collider = GetComponent<Collider2D>();
+        collider.enabled = false;
+        movement.enabled = false;
+        movement.StopMovement();
+        anim.SetBool("Death", true);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        DamageDealer damageDealer = collision.GetComponent<DamageDealer>();
+
+        if (damageDealer != null)
+        {
+            DoDamage(damageDealer.damage);
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, followDistance);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackDistance);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, outOfFallowDistance);
 
     }
 
