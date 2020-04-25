@@ -47,6 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4ce13c5bd04d8438df0b18045adfc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  followDistance: 6
+  attackDistance: 2
+  attackRate: 0
+  damage: 0
 --- !u!114 &6321880934336431221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44918d766c6bb8f45a97231ffeb3c8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 6
 --- !u!50 &1142113142341198452
 Rigidbody2D:
   serializedVersion: 4

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,33 +25,58 @@ public class Zombie : MonoBehaviour
 
     Player player;
 
+    ZombieMovement movement;
+    Animator anim;
+    Rigidbody2D rb;
+
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<Player>();
 
+        movement = GetComponent<ZombieMovement>();
+        anim = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+
         ChangeState(ZombieStates.STAND);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         UpdateState();
+
+        anim.SetFloat("Speed", rb.velocity.magnitude);
+
     }
 
     void UpdateState()
     {
         float distance = Vector2.Distance(transform.position, player.transform.position);
+
         switch (activeState)
         {
             case ZombieStates.STAND:
-                //DO STAND
+                if (distance <= followDistance)
+                {
+                    ChangeState(ZombieStates.MOVE);
+                }
+                //check field of view
                 break;
             case ZombieStates.MOVE:
-                //DO MOVE
+                if (distance <= attackDistance)
+                {
+                    ChangeState(ZombieStates.ATTACK);
+                }
+                Rotate();
                 break;
             case ZombieStates.ATTACK:
-                //DO ATTACK
+                if (distance > attackDistance)
+                {
+                    ChangeState(ZombieStates.MOVE);
+                }
+                Rotate();
+                anim.SetTrigger("Shoot");
                 break;
         }
     }
@@ -62,18 +87,34 @@ public class Zombie : MonoBehaviour
         switch (activeState)
         {
             case ZombieStates.STAND:
-                //DO STAND
+                movement.enabled = false;
+                movement.StopMovement();
                 break;
             case ZombieStates.MOVE:
-                //DO MOVE
+                movement.enabled = true;
+                anim.SetTrigger("Move");
                 break;
             case ZombieStates.ATTACK:
-                //DO ATTACK
+                movement.enabled = false;
+                movement.StopMovement();
                 break;
         }
     }
 
+    void Rotate()
+    {
+        Vector2 direction = player.transform.position - transform.position;
+        transform.up = -direction;
+    }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, followDistance);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackDistance);
+
+    }
 
 
 }

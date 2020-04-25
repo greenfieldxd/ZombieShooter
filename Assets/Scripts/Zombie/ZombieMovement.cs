@@ -13,12 +13,17 @@ public class ZombieMovement : MonoBehaviour
     //components on the same gameObject
     Rigidbody2D rb;
 
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<Player>();
 
-        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -27,4 +32,10 @@ public class ZombieMovement : MonoBehaviour
         Vector2 direction = player.transform.position - transform.position;
         rb.velocity = direction.normalized * speed;
     }
+
+    public void StopMovement()
+    {
+        rb.velocity = Vector2.zero;
+    }
+
 }
