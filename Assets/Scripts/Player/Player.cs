@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
         anim.SetBool("Death", true);
         playerMovement.enabled = false;
         playerMovement.StopMovement();
+        this.enabled = false;
 
         SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
         sceneLoader.RestartScene();

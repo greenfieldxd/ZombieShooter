@@ -1,4 +1,4 @@
-﻿ using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +16,7 @@ public class Zombie : MonoBehaviour
 
     float nextAttack;
 
-    
+
 
     enum ZombieStates
     {
@@ -57,6 +57,12 @@ public class Zombie : MonoBehaviour
 
     void UpdateState()
     {
+        if (player.enabled == false)
+        {
+            //go to startPosition
+            return;
+        }
+
         float distance = Vector2.Distance(transform.position, player.transform.position);
 
         switch (activeState)
@@ -83,10 +89,17 @@ public class Zombie : MonoBehaviour
                 if (distance > attackDistance)
                 {
                     ChangeState(ZombieStates.MOVE);
+                    anim.SetTrigger("Move");
+
                 }
-                ZombieAttack();
+                nextAttack -= Time.fixedDeltaTime;
+                if (nextAttack <= 0)
+                {
+                    anim.SetTrigger("Shoot");
+
+                    nextAttack = attackRate;
+                }
                 Rotate();
-                anim.SetTrigger("Shoot");
                 break;
         }
     }
@@ -102,7 +115,6 @@ public class Zombie : MonoBehaviour
                 break;
             case ZombieStates.MOVE:
                 movement.enabled = true;
-                anim.SetTrigger("Move");
                 break;
             case ZombieStates.ATTACK:
                 movement.enabled = false;
@@ -117,19 +129,11 @@ public class Zombie : MonoBehaviour
         transform.up = -direction;
     }
 
-    void ZombieAttack()
+
+
+    public void DoDamageToPlayer()
     {
-        if (nextAttack <= 0)
-        {
-            player.DoDamage(damage);
-            nextAttack = attackRate;
-        }
-
-        if (attackRate > 0)
-        {
-            nextAttack -= Time.deltaTime;
-        }
-
+        player.DoDamage(damage);
     }
 
     public void DoDamage(float damage)

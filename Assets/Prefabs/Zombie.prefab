@@ -51,7 +51,7 @@ MonoBehaviour:
   attackDistance: 2
   outOfFallowDistance: 12
   attackRate: 2
-  damage: 20
+  damage: 10
   health: 100
 --- !u!114 &6321880934336431221
 MonoBehaviour:
@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 1142113144098570397}
   - component: {fileID: 1142113144098570396}
   - component: {fileID: 7687915005917475481}
+  - component: {fileID: 7644559134917059706}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -204,3 +205,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7644559134917059706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142113144098570394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d213bf968c0300479b23a871d8c100c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

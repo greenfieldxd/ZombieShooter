@@ -40,16 +40,12 @@ public class ExplosiveBarrel : MonoBehaviour
                 }
             }
             anim.SetTrigger("Explode");
-            Invoke(nameof(DestroyBarrel), 0.5f);
-            
+            Destroy(gameObject, 0.5f);
+
         }
         strength--;
     }
 
-    void DestroyBarrel()
-    {
-        Destroy(gameObject);
-    }
 
     private void OnDrawGizmos()
     {
