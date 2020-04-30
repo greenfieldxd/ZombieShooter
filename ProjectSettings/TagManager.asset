@@ -39,6 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Map
+    uniqueID: 1414365163
+    locked: 0
   - name: Enemy, Zombie
     uniqueID: 3605812489
     locked: 0
