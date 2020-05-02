@@ -149,6 +149,11 @@ public class Zombie : MonoBehaviour
 
     private void ZombieDie()
     {
+        if (gameObject.CompareTag("Boss"))
+        {
+            SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
+            sceneLoader.LoadNextLevel();
+        }
         this.enabled = false;
         Collider2D collider = GetComponent<Collider2D>();
         collider.enabled = false;
