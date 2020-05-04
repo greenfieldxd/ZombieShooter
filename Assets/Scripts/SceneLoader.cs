@@ -16,7 +16,7 @@ public class SceneLoader : MonoBehaviour
     IEnumerator RestartGame()
     {
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Level 1");
     }
 
     public void LoadNextLevel()
