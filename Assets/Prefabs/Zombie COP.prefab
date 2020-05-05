@@ -51,7 +51,7 @@ MonoBehaviour:
   attackDistance: 2
   outOfFallowDistance: 20
   attackRate: 1
-  damage: 25
+  damage: 10
   health: 150
 --- !u!114 &6321880934336431221
 MonoBehaviour:
