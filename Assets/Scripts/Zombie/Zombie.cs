@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Zombie : MonoBehaviour
 {
+    public Action onHealthChanged = delegate { };
+
     [Header("AI config")]
     public float followDistance;
     public float attackDistance;
@@ -13,6 +16,7 @@ public class Zombie : MonoBehaviour
     public float attackRate;
     public float damage;
     public float health;
+    public float maxHealth;
 
     float nextAttack;
 
@@ -43,7 +47,6 @@ public class Zombie : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         ChangeState(ZombieStates.STAND);
-
     }
 
     // Update is called once per frame
@@ -70,7 +73,15 @@ public class Zombie : MonoBehaviour
             case ZombieStates.STAND:
                 if (distance <= followDistance)
                 {
-                    ChangeState(ZombieStates.MOVE);
+                    LayerMask mask = LayerMask.GetMask("Walls");
+                    Vector2 direction = player.transform.position - transform.position;
+
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, mask);
+
+                    if (hit.collider == null)
+                    {
+                        ChangeState(ZombieStates.MOVE);
+                    }
                 }
                 //check field of view
                 break;
@@ -140,6 +151,8 @@ public class Zombie : MonoBehaviour
     {
         health -= damage;
 
+        onHealthChanged();
+
         if (health <= 0)
         {
             ZombieDie();
@@ -155,11 +168,16 @@ public class Zombie : MonoBehaviour
         collider.enabled = false;
         movement.enabled = false;
         movement.StopMovement();
-    
+
+        Canvas canvas = GetComponentInChildren<Canvas>();
+        if (canvas != null)
+        {
+            canvas.enabled = false;
+        }
         if (gameObject.CompareTag("Boss"))
         {
             StartCoroutine(BossDeathDelay(3));
-            
+
         }
     }
 
