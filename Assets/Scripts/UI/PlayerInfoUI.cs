@@ -14,12 +14,16 @@ public class PlayerInfoUI : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
 
-        healthSlider.value = 100;
+        healthSlider.maxValue = player.health;
+        healthSlider.value = player.health;
+
+        player.onHealthChange += UpdateHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    void UpdateHealth()
     {
         healthSlider.value = player.health;
     }
+
+    
 }

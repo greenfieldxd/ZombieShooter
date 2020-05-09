@@ -7,16 +7,11 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
 
-    public void RestartScene()
+    
+    public void RestartGame()
     {
-        StartCoroutine(RestartGame());
-    }
-
-
-    IEnumerator RestartGame()
-    {
-        yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("Level 1");
+        int activeSneneIndex = SceneManager.GetActiveScene().buildIndex; // Нашли индекс активной сцены
+        SceneManager.LoadScene(activeSneneIndex);
     }
 
     public void LoadNextLevel()

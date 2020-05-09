@@ -15,6 +15,8 @@ public class MedicineChest : MonoBehaviour
             if (player.health < 100)
             {
                 player.health = 100;
+                player.onHealthChange();
+
                 Destroy(gameObject);
             }
         }

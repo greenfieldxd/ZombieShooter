@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player : MonoBehaviour
 {
+
+    public Action onHealthChange = delegate { };
+    public Action onPlayerDeath = delegate { };
+
     public float fireRate;
     public float health;
 
@@ -50,6 +55,7 @@ public class Player : MonoBehaviour
     public void DoDamage(float damage)
     {
         health -= damage;
+        onHealthChange();
 
         if (health <= 0)
         {
@@ -65,8 +71,7 @@ public class Player : MonoBehaviour
         playerMovement.StopMovement();
         this.enabled = false;
 
-        SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
-        sceneLoader.RestartScene();
+        onPlayerDeath();
     }
 
     
