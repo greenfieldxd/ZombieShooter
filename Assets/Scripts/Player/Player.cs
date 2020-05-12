@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Lean.Pool;
 
 public class Player : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class Player : MonoBehaviour
         {
             if (Input.GetButton("Fire1") && nextFire <= 0)
             {
-                Instantiate(bulletPrefab, shootPosition.position, transform.rotation);
+                LeanPool.Spawn(bulletPrefab, shootPosition.position, transform.rotation);
                 nextFire = fireRate;
                 anim.SetTrigger("Shoot");
             }

@@ -11,6 +11,7 @@ public class Zombie : MonoBehaviour
     public float followDistance;
     public float attackDistance;
     public float outOfFallowDistance;
+    public float searchAngle = 45;
 
     [Header("Attack, health config")]
     public float attackRate;
@@ -196,10 +197,24 @@ public class Zombie : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, followDistance);
+
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackDistance);
+
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, outOfFallowDistance);
+
+        Gizmos.color = Color.magenta;
+        Vector3 lookDirection = -transform.up;
+        Gizmos.DrawRay(transform.position, lookDirection * followDistance);
+
+        //Quaternion rotation = Quaternion.AngleAxis(searchAngle, Vector3.forward);
+        Vector3 v1 = Quaternion.AngleAxis(searchAngle, Vector3.forward) * lookDirection;
+        Vector3 v2 = Quaternion.AngleAxis(-searchAngle, Vector3.forward) * lookDirection;
+
+        Gizmos.DrawRay(transform.position, v1 * followDistance);
+        Gizmos.DrawRay(transform.position, v2 * followDistance);
+
 
     }
 
@@ -215,6 +230,7 @@ public class Zombie : MonoBehaviour
     {
         movement.enabled = true;
         ChangeState(ZombieStates.STAND);
+        player.onPlayerDeath -= ChangeZombieStateToSTAND;
     }
 
 
