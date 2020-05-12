@@ -68,6 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
+  moveToPlayer: 0
+  startPosition: {fileID: 232192140673526819, guid: 5b411dd0d83dd0242b3430bd510402c0,
+    type: 3}
 --- !u!50 &1142113142341198452
 Rigidbody2D:
   serializedVersion: 4

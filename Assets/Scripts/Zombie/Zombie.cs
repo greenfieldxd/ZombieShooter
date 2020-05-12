@@ -47,6 +47,7 @@ public class Zombie : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         ChangeState(ZombieStates.STAND);
+        player.onPlayerDeath += ChangeZombieStateToSTAND;
     }
 
     // Update is called once per frame
@@ -62,7 +63,7 @@ public class Zombie : MonoBehaviour
     {
         if (player.enabled == false)
         {
-            //go to startPosition
+                //go to startPosition when player die (Action onPlayerDeath)
             return;
         }
 
@@ -121,11 +122,11 @@ public class Zombie : MonoBehaviour
         switch (activeState)
         {
             case ZombieStates.STAND:
-                movement.enabled = false;
-                movement.StopMovement();
+                movement.moveToPlayer = false;
                 break;
             case ZombieStates.MOVE:
                 movement.enabled = true;
+                movement.moveToPlayer = true;
                 break;
             case ZombieStates.ATTACK:
                 movement.enabled = false;
@@ -207,6 +208,13 @@ public class Zombie : MonoBehaviour
         yield return new WaitForSeconds(delay);
         SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
         sceneLoader.LoadNextLevel();
+    }
+
+    //when player die change zombie state to STAND and movement ON
+    void ChangeZombieStateToSTAND()
+    {
+        movement.enabled = true;
+        ChangeState(ZombieStates.STAND);
     }
 
 

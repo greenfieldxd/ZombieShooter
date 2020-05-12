@@ -132313,6 +132313,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1632916571}
+    - target: {fileID: 2139977710919990959, guid: 745790be2504e4989b3097085993b198,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3439050288436138087, guid: 745790be2504e4989b3097085993b198,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -132432,11 +132437,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 7903114272493431091, guid: 745790be2504e4989b3097085993b198,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 745790be2504e4989b3097085993b198, type: 3}

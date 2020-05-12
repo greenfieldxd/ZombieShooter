@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeathPanel : MonoBehaviour
 {
    
+    public Image deathPanel;
 
     Player player;
 
@@ -18,12 +20,7 @@ public class DeathPanel : MonoBehaviour
 
     void DeathPlayerPanel()
     {
-        
+        deathPanel.gameObject.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -54,6 +54,7 @@ MonoBehaviour:
   attackRate: 2
   damage: 5
   health: 100
+  maxHealth: 0
 --- !u!114 &6321880934336431221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,6 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
+  moveToPlayer: 0
+  startPosition: {fileID: 232192140673526819, guid: 5b411dd0d83dd0242b3430bd510402c0,
+    type: 3}
 --- !u!50 &1142113142341198452
 Rigidbody2D:
   serializedVersion: 4

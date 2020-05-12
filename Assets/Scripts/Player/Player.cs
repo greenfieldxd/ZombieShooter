@@ -66,9 +66,14 @@ public class Player : MonoBehaviour
 
     void DeathPlayer()
     {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        CircleCollider2D collider = GetComponent<CircleCollider2D>();
+
         anim.SetBool("Death", true);
         playerMovement.enabled = false;
         playerMovement.StopMovement();
+        collider.enabled = false; // off collider
+        rb.velocity = Vector2.zero; //velocity ZERO
         this.enabled = false;
 
         onPlayerDeath();
