@@ -9,6 +9,7 @@ public class ZombieMovement : MonoBehaviour
     public bool moveToPlayer;
 
     public GameObject startPosition;
+    public Transform[] wayPoints;
 
     //other gameObjects
     Player player;
@@ -61,6 +62,23 @@ public class ZombieMovement : MonoBehaviour
         Vector2 direction = startPosition.transform.position - transform.position;
         rb.velocity = direction.normalized * speed;
         Rotate();
+    }
+
+    private void GoToWayPoints()
+    {
+        for (int i = 0; i < wayPoints.Length; i++)
+        {
+            float distance = Vector2.Distance(transform.position, wayPoints[i].position);
+
+            if (distance < 0.2f)
+            {
+                StopMovement();
+                return;
+            }
+            Vector2 direction = wayPoints[i].position - transform.position;
+            rb.velocity = direction.normalized * speed;
+            Rotate();
+        }
     }
 
 

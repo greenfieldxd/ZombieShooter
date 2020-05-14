@@ -51,6 +51,7 @@ MonoBehaviour:
   followDistance: 6
   attackDistance: 2
   outOfFallowDistance: 12
+  searchAngle: 45
   attackRate: 2
   damage: 5
   health: 100

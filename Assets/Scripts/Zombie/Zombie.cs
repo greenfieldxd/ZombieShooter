@@ -64,7 +64,7 @@ public class Zombie : MonoBehaviour
     {
         if (player.enabled == false)
         {
-                //go to startPosition when player die (Action onPlayerDeath)
+            //go to startPosition when player die (Action onPlayerDeath)
             return;
         }
 
@@ -75,15 +75,7 @@ public class Zombie : MonoBehaviour
             case ZombieStates.STAND:
                 if (distance <= followDistance)
                 {
-                    LayerMask mask = LayerMask.GetMask("Walls");
-                    Vector2 direction = player.transform.position - transform.position;
-
-                    RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, mask);
-
-                    if (hit.collider == null)
-                    {
-                        ChangeState(ZombieStates.MOVE);
-                    }
+                    CheckPlayer(distance);
                 }
                 //check field of view
                 break;
@@ -115,6 +107,28 @@ public class Zombie : MonoBehaviour
                 Rotate();
                 break;
         }
+    }
+
+    private void CheckPlayer(float distance)
+    {
+        Vector2 playerDirection = player.transform.position - transform.position;
+        Vector3 lookDirection = -transform.up;
+
+        float angle = Vector2.Angle(lookDirection, playerDirection);
+
+        if (angle <= searchAngle)
+        {
+            LayerMask mask = LayerMask.GetMask("Walls");
+            Vector2 direction = player.transform.position - transform.position;
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, mask);
+
+            if (hit.collider == null)
+            {
+                ChangeState(ZombieStates.MOVE);
+            }
+        }
+
     }
 
     void ChangeState(ZombieStates newState)
