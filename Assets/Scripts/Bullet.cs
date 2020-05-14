@@ -22,7 +22,10 @@ public class Bullet : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        LeanPool.Despawn(gameObject);
+        if (gameObject.activeSelf)// cheack if object was alredy despawn
+        {
+            LeanPool.Despawn(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
