@@ -64,7 +64,7 @@ public class ZombieMovement : MonoBehaviour
         Rotate();
     }
 
-    private void GoToWayPoints()
+    private void GoToWayPoints()//no working, need fix
     {
         for (int i = 0; i < wayPoints.Length; i++)
         {

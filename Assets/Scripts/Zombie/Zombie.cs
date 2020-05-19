@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Pathfinding;
+using Lean.Pool;
 
 public class Zombie : MonoBehaviour
 {
     public Action onHealthChanged = delegate { };
+
+    public GameObject startPosition;
+    public GameObject ammo;
 
     [Header("AI config")]
     public float followDistance;
@@ -22,7 +27,6 @@ public class Zombie : MonoBehaviour
     float nextAttack;
 
 
-
     enum ZombieStates
     {
         STAND,
@@ -34,18 +38,22 @@ public class Zombie : MonoBehaviour
 
     Player player;
 
-    ZombieMovement movement;
+    AIPath movement;
+    AIDestinationSetter target;
     Animator anim;
     Rigidbody2D rb;
 
-    // Start is called before the first frame update
+   
     void Start()
     {
         player = FindObjectOfType<Player>();
 
-        movement = GetComponent<ZombieMovement>();
+        movement = GetComponent<AIPath>();
+        target = GetComponent<AIDestinationSetter>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
+        startPosition = Instantiate(startPosition, transform.position, Quaternion.identity);
 
         ChangeState(ZombieStates.STAND);
         player.onPlayerDeath += ChangeZombieStateToSTAND;
@@ -105,6 +113,10 @@ public class Zombie : MonoBehaviour
                     nextAttack = attackRate;
                 }
                 Rotate();
+                if (rb.velocity.magnitude > 0)// make velocity zero when zombie move on STATE ATTACK
+                {
+                    rb.velocity = Vector2.zero;
+                }
                 break;
         }
     }
@@ -137,15 +149,14 @@ public class Zombie : MonoBehaviour
         switch (activeState)
         {
             case ZombieStates.STAND:
-                movement.moveToPlayer = false;
+                target.target = startPosition.transform;
                 break;
             case ZombieStates.MOVE:
                 movement.enabled = true;
-                movement.moveToPlayer = true;
+                target.target = player.transform;
                 break;
             case ZombieStates.ATTACK:
                 movement.enabled = false;
-                movement.StopMovement();
                 break;
         }
     }
@@ -183,7 +194,11 @@ public class Zombie : MonoBehaviour
         Collider2D collider = GetComponent<Collider2D>();
         collider.enabled = false;
         movement.enabled = false;
-        movement.StopMovement();
+
+        //Instantiate ammo when zombie die
+        
+        LeanPool.Spawn(ammo, transform.position, Quaternion.identity);
+        
 
         Canvas canvas = GetComponentInChildren<Canvas>();
         if (canvas != null)

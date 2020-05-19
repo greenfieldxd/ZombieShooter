@@ -10,12 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1142113142341198451}
   - component: {fileID: 3749003056490976492}
-  - component: {fileID: 6321880934336431221}
   - component: {fileID: 1142113142341198452}
   - component: {fileID: 1142113142341198448}
   - component: {fileID: 973265522535230593}
   - component: {fileID: 6757548305839945639}
   - component: {fileID: 4650096068062142133}
+  - component: {fileID: 6144328106652436233}
+  - component: {fileID: 3622055124372750366}
   m_Layer: 8
   m_Name: Zombie
   m_TagString: Untagged
@@ -46,11 +47,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1142113142341198449}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae4ce13c5bd04d8438df0b18045adfc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPosition: {fileID: 232192140673526819, guid: 5b411dd0d83dd0242b3430bd510402c0,
+    type: 3}
+  ammo: {fileID: 4430427735670032256, guid: f3f67d4c35a6a20488d8b928220eda82, type: 3}
   followDistance: 6
   attackDistance: 2
   outOfFallowDistance: 12
@@ -59,23 +63,6 @@ MonoBehaviour:
   damage: 5
   health: 100
   maxHealth: 0
---- !u!114 &6321880934336431221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1142113142341198449}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44918d766c6bb8f45a97231ffeb3c8e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 6
-  moveToPlayer: 0
-  startPosition: {fileID: 232192140673526819, guid: 5b411dd0d83dd0242b3430bd510402c0,
-    type: 3}
-  wayPoints: []
 --- !u!50 &1142113142341198452
 Rigidbody2D:
   serializedVersion: 4
@@ -154,12 +141,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 2
-  radius: 0.8
+  radius: 1.5
   height: 2
   repathRate: 0.5
   canSearch: 1
   canMove: 1
-  maxSpeed: 7
+  maxSpeed: 6
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -171,8 +158,8 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.6
-  pickNextWaypointDist: 1
-  endReachedDistance: 0.2
+  pickNextWaypointDist: 1.5
+  endReachedDistance: 0.5
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 0
   whenCloseToDestination: 0
@@ -191,6 +178,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   target: {fileID: 8315426759667823203, guid: 30d3a9f2f2f97a64cb51c59106b7fb76, type: 3}
+--- !u!114 &6144328106652436233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142113142341198449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6a34d769a1e4ac7b0b30e433aa443c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  smoothType: 0
+  subdivisions: 2
+  iterations: 2
+  strength: 0.5
+  uniformLength: 1
+  maxSegmentLength: 2
+  bezierTangentLength: 0.4
+  offset: 0.2
+  factor: 0.1
+--- !u!114 &3622055124372750366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142113142341198449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a537d958aa5bb4f35b0d7b40d72278f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  penalty: 1000
+  randomStep: 10
 --- !u!1 &1142113144098570394
 GameObject:
   m_ObjectHideFlags: 0

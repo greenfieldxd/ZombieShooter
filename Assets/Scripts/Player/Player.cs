@@ -9,9 +9,13 @@ public class Player : MonoBehaviour
 
     public Action onHealthChange = delegate { };
     public Action onPlayerDeath = delegate { };
+    public Action onPlayerAmmo = delegate { };
 
     public float fireRate;
     public float health;
+
+    public int ammo = 15;
+    public int maxAmmo = 150;
 
 
     public GameObject bulletPrefab;
@@ -39,16 +43,21 @@ public class Player : MonoBehaviour
     {
         if (health > 0)
         {
-            if (Input.GetButton("Fire1") && nextFire <= 0)
+            if (ammo > 0)
             {
-                LeanPool.Spawn(bulletPrefab, shootPosition.position, transform.rotation);
-                nextFire = fireRate;
-                anim.SetTrigger("Shoot");
-            }
+                if (Input.GetButton("Fire1") && nextFire <= 0)
+                {
+                    LeanPool.Spawn(bulletPrefab, shootPosition.position, transform.rotation);
+                    nextFire = fireRate;
+                    anim.SetTrigger("Shoot");
+                    ammo--;
+                    onPlayerAmmo();
+                }
 
-            if (nextFire > 0)
-            {
-                nextFire -= Time.deltaTime;
+                if (nextFire > 0)
+                {
+                    nextFire -= Time.deltaTime;
+                }
             }
         }
     }

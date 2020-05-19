@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerInfoUI : MonoBehaviour
 {
     public Slider healthSlider;
+    public Text ammoText;
 
     Player player;
 
@@ -18,11 +19,19 @@ public class PlayerInfoUI : MonoBehaviour
         healthSlider.value = player.health;
 
         player.onHealthChange += UpdateHealth;
+        player.onPlayerAmmo += UpdateAmmo;
+
+        UpdateAmmo();
     }
 
     void UpdateHealth()
     {
         healthSlider.value = player.health;
+    }
+
+    void UpdateAmmo()
+    {
+        ammoText.text = "Ammo: " + player.ammo;
     }
 
     
