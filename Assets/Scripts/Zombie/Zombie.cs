@@ -26,6 +26,8 @@ public class Zombie : MonoBehaviour
 
     float nextAttack;
 
+    bool death = false;
+
 
     enum ZombieStates
     {
@@ -64,7 +66,7 @@ public class Zombie : MonoBehaviour
     {
         UpdateState();
 
-        anim.SetFloat("Speed", rb.velocity.magnitude);
+        anim.SetFloat("Speed", movement.velocity.magnitude);
 
     }
 
@@ -101,8 +103,7 @@ public class Zombie : MonoBehaviour
             case ZombieStates.ATTACK:
                 if (distance > attackDistance)
                 {
-                    ChangeState(ZombieStates.MOVE);
-                    anim.SetTrigger("Move");
+                    ChangeState(ZombieStates.MOVE); 
 
                 }
                 nextAttack -= Time.fixedDeltaTime;
@@ -189,11 +190,14 @@ public class Zombie : MonoBehaviour
 
     private void ZombieDie()
     {
+        death = true;
         anim.SetBool("Death", true);
         this.enabled = false;
         Collider2D collider = GetComponent<Collider2D>();
         collider.enabled = false;
         movement.enabled = false;
+        target.enabled = false;
+        Destroy(rb);
 
         //Instantiate ammo when zombie die
         
@@ -257,9 +261,12 @@ public class Zombie : MonoBehaviour
     //when player die change zombie state to STAND and movement ON
     void ChangeZombieStateToSTAND()
     {
-        movement.enabled = true;
-        ChangeState(ZombieStates.STAND);
-        player.onPlayerDeath -= ChangeZombieStateToSTAND;
+        if (!death)
+        {
+            movement.enabled = true;
+            ChangeState(ZombieStates.STAND);
+            player.onPlayerDeath -= ChangeZombieStateToSTAND;
+        }
     }
 
 
